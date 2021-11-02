@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card } from 'antd';
 import axios from 'axios';
 import Router from 'next/router';
+import Image from 'next/image'
 
 const { Meta } = Card;
 
@@ -35,8 +36,8 @@ const MainPart = () => {
             <h1>BrandNew items</h1>
             <Card >
             {nailPolish.map((item) => (
-                <Card.Grid style={gridStyle} onClick={() => {goDetail(item.id)}}>
-                    <img style={{ width: 150, height:150}} alt="example" src={item.image} />
+                <Card.Grid key={item.id} style={gridStyle} onClick={() => {goDetail(item.id)}}>
+                    <Image style={{ width: 150, height:150}} alt="example" src={item.image} />
                     <Meta title={item.title} description={item.price + "$"} />
                 </Card.Grid>
             ))}

@@ -1,24 +1,49 @@
-import { Layout, Menu, Breadcrumb } from 'antd';
-import MainPart from '../components/MainPart';
+import React, { useEffect, useState } from 'react'
+import { Card } from 'antd';
+import axios from 'axios';
+import Router from 'next/router';
+import AppLayout from '../components/AppLayout';
 
-export default function Home() {
-  const { Header, Footer, Content } = Layout;
+const { Meta } = Card;
+
+const gridStyle = {
+  width: '25%',
+  textAlign: 'center',
+};
+
+const index = () => {
+
+  useEffect(() => {
+    fetchList();
+  }, [])
+
+  const [nailPolish, setNailPolish] = useState([]);
+
+  const fetchList = () => {
+      axios.get("https://fakestoreapi.com/products")
+          .then(res => setNailPolish(res.data));
+  }
+
+  const goDetail = (id) => {
+      Router.push(`http://localhost:3000/item/${id}`)
+  }
 
   return (
-    <Layout className="layout">
-    <Header>
-      <div className="logo" />
-      <Menu theme="dark" mode="horizontal" >
-        <Menu.Item>Home</Menu.Item>
-        <Menu.Item>products</Menu.Item>
-      </Menu>
-    </Header>
-    <Content style={{ padding: '0 50px' }}>
-      <div className="site-layout-content">
-        <MainPart />
-      </div>
-    </Content>
-    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-  </Layout>
+    
+      <AppLayout>
+          <h1>BrandNew items</h1>
+          <Card >
+          {nailPolish.map((item) => (
+              <Card.Grid style={gridStyle} onClick={() => {goDetail(item.id)}}>
+                  <img style={{ width: 150, height:150}} alt="example" src={item.image} />
+                  <Meta title={item.title} description={item.price + "$"} />
+              </Card.Grid>
+          ))}
+          </Card>
+          
+      </AppLayout>
+    
   )
 }
+
+export default index
