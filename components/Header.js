@@ -3,6 +3,7 @@ import { PageHeader } from 'antd';
 import Image from 'next/image'
 import { Menu } from 'antd';
 import { HomeFilled, SkinFilled, ToolFilled } from '@ant-design/icons';
+import Link from 'next/link';
 
 const { SubMenu } = Menu;
 
